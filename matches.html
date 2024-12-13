@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matches - Bangladesh Football Federation</title>
+    <link rel="stylesheet" href="matches.css">
+
+    <style>
+        /* Responsive layout for matches */
+        .match-section {
+            margin-top: 20px;
+        }
+
+        .tournament {
+            margin-bottom: 30px;
+        }
+
+        .match-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive: 2-3 columns depending on screen size */
+            gap: 20px;
+            margin-top: 10px;
+        }
+
+        .match {
+            border: 1px solid #ccc;
+            padding: 15px;
+            border-radius: 10px;
+            background-color: #080101;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .match h4 {
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .match p {
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #080101;
+            color: white;
+            margin-top: 40px;
+        }
+
+        footer p {
+            margin: 0;
+        }
+    </style>
+
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <h1>Bangladesh Football Federation</h1>
+            </div>
+            <nav>
+                <ul class="menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="teams.html">Teams</a></li>
+                    <li><a href="tournaments.html">Tournaments</a></li>
+                    <li><a href="stadium.html">Stadiums</a></li>
+                    <li><a href="media.html">Media</a></li>
+                    <li><a href="#" class="active">Matches</a></li>
+                    <li><a href="dashboard.html">Dashboard</a></li>
+                </ul>
+            </nav>
+        </header>
+        
+        <main>
+            <section class="match-section">
+                <h2>Matches by Tournament</h2>
+
+                <!-- Tournament Matches -->
+                <div class="tournament">
+                    <h3>Bangladesh Premier League</h3>
+                    <div class="match-list" id="bpl-matches"></div>
+                </div>
+
+                <div class="tournament">
+                    <h3>Independence Cup</h3>
+                    <div class="match-list" id="independence-cup-matches"></div>
+                </div>
+
+                <div class="tournament">
+                    <h3>Federation Cup</h3>
+                    <div class="match-list" id="federation-cup-matches"></div>
+                </div>
+            </section>
+        </main>
+        
+        <footer>
+            <p>&copy; 2024 Bangladesh Football Federation. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        const baseUrl = "http://localhost:3000/matches";
+
+        // Function to fetch and display matches
+        async function fetchMatches() {
+            try {
+                const response = await fetch(baseUrl);
+                const matches = await response.json();
+
+                const bplMatches = document.getElementById("bpl-matches");
+                const independenceCupMatches = document.getElementById("independence-cup-matches");
+                const federationCupMatches = document.getElementById("federation-cup-matches");
+
+                // Clear existing content
+                bplMatches.innerHTML = "";
+                independenceCupMatches.innerHTML = "";
+                federationCupMatches.innerHTML = "";
+
+                matches.forEach(match => {
+                    const matchDiv = document.createElement("div");
+                    matchDiv.classList.add("match");
+
+                    matchDiv.innerHTML = `
+                        <h4>Match ${match.match_id}</h4>
+                        <p><strong>Date:</strong> ${match.date || "TBD"}</p>
+                        <p><strong>Time:</strong> ${match.time || "TBD"}</p>
+                        <p><strong>Teams:</strong> ${match.teams || "TBD"}</p>
+                        <p><strong>Stadium:</strong> ${match.stadium_name || "TBD"}</p>
+                        <p><strong>Official:</strong> ${match.official_name || "TBD"}</p>
+                    `;
+
+                    if (match.tournament_name === "Bangladesh Premier League") {
+                        bplMatches.appendChild(matchDiv);
+                    } else if (match.tournament_name === "Independence Cup") {
+                        independenceCupMatches.appendChild(matchDiv);
+                    } else if (match.tournament_name === "Federation Cup") {
+                        federationCupMatches.appendChild(matchDiv);
+                    }
+                });
+            } catch (error) {
+                console.error("Error fetching matches:", error);
+            }
+        }
+
+        // Fetch matches on page load
+        fetchMatches();
+    </script>
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BFF Dashboard</title>
+    <link rel="stylesheet" href="dashboard.css"> <!-- Link to your CSS file -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    
+<style>
+    /* Style adjustments for the timeline */
+    #timeline {
+        height: 400px;
+        margin-top: 20px;
+    }
+</style>
+   
+</head>
+<body>
+    <header style="background-color: #131413; color: white;" class="text-center py-3">>
+        <h1>Bangladesh Football Federation - Dashboard</h1>
+
+        <nav>
+            <ul class="menu" >
+                <li><a href="index.html">Home</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="container my-4">
+        <div class="row">
+            <!-- Summary Cards -->
+            <div class="col-lg-3 col-sm-6 mb-4">
+                <div class="card shadow-sm text-center">
+                    <div class="card-body">
+                        <h5 class="card-title">Total Teams</h5>
+                        <h2 id="total-teams" class="text-primary">0</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6 mb-4">
+                <div class="card shadow-sm text-center">
+                    <div class="card-body">
+                        <h5 class="card-title">Total Players</h5>
+                        <h2 id="total-players" class="text-success">0</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6 mb-4">
+                <div class="card shadow-sm text-center">
+                    <div class="card-body">
+                        <h5 class="card-title">Ongoing Tournaments</h5>
+                        <h2 id="ongoing-tournaments" class="text-warning">0</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6 mb-4">
+                <div class="card shadow-sm text-center">
+                    <div class="card-body">
+                        <h5 class="card-title">Upcoming Matches</h5>
+                        <h2 id="upcoming-matches" class="text-danger">0</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Links to Management Features -->
+        <div class="row mt-5">
+            <div class="col-md-6 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Manage Teams</h5>
+                        <p>View and manage team details.</p>
+                        <a href="teams.html" class="btn btn-primary">Go to Teams</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Manage Tournaments</h5>
+                        <p>View and manage tournaments.</p>
+                        <a href="tournaments.html" class="btn btn-primary">Go to Tournaments</a>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        <div class="row">
+            
+            <div class="col-md-6 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Manage Matches</h5>
+                        <p>View and manage match schedules.</p>
+                        <a href="matches.html" class="btn btn-primary">Go to Matches</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Manage Media</h5>
+                        <p>View and manage media coverage.</p>
+                        <a href="media.html" class="btn btn-primary">Go to Media</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Manage Stadiums</h5>
+                        <p>View and manage stadium details.</p>
+                        <a href="stadium.html" class="btn btn-primary">Go to Stadiums</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    
+   
+
+        
+
+    
+
+    <footer style="background-color: #000000; color: white;" class="text-center py-3">
+        <p>&copy; 2024 Bangladesh Football Federation</p>
+    </footer>
+
+    <script src="script.js">
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Media - Bangladesh Football Federation</title>
+    <link rel="stylesheet" href="media.css">
+
+    <style>
+        /* Responsive layout for media partners */
+        #media-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .media {
+            border: 1px solid #ccc;
+            padding: 15px;
+            border-radius: 10px;
+            background-color: #080101;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .media h3 {
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .media p {
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+
+        .media button {
+            margin-top: 10px;
+            padding: 8px 12px;
+            font-size: 0.9rem;
+            color: white;
+            background: #8f1c1c;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .media button:hover {
+            background: #0056b3;
+        }
+
+        .add-media-form-container {
+            margin: 20px auto;
+            max-width: 700px;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border: 1px solid #ddd;
+        }
+
+        .add-media-form-container h3 {
+            text-align: center;
+            font-size: 1.8rem;
+            color: #8f1c1c;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        #add-media-form table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        #add-media-form table td {
+            padding: 10px;
+            vertical-align: top;
+        }
+
+        #add-media-form label {
+            font-size: 1rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        #add-media-form input,
+        #add-media-form textarea {
+            width: 100%;
+            padding: 10px;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        #add-media-form textarea {
+            resize: none;
+            height: 80px;
+        }
+
+        #add-media-form button {
+            width: 50%;
+            padding: 10px;
+            font-size: 1rem;
+            color: #fff;
+            background-color: #8f1c1c;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #add-media-form button:hover {
+            background-color: #b12323;
+        }
+    </style>
+
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <h1>Bangladesh Football Federation</h1>
+            </div>
+            <nav>
+                <ul class="menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="teams.html">Teams</a></li>
+                    <li><a href="tournaments.html">Tournaments</a></li>
+                    <li><a href="stadium.html">Stadiums</a></li>
+                    <li><a href="#" class="active">Media</a></li>
+                    <li><a href="matches.html"> Matches</a></li>
+                    <li><a href="dashboard.html">Dashboard</a></li>
+                </ul>
+            </nav>
+        </header>
+        <main>
+            <section class="media-section">
+                <h2>Media Partners</h2>
+                <div id="media-list"></div>
+
+                
+            </section>
+
+            <section class="add-media">
+                <div class="add-media-form-container">
+                    <h3>Add New Media Partner</h3>
+                    <form id="add-media-form">
+                        <table>
+                            <tr>
+                                <td><label for="name">Name:</label></td>
+                                <td><input type="text" id="name" name="name" placeholder="Enter media partner name" required></td>
+                            </tr>
+                            <tr>
+                                <td><label for="type">Type:</label></td>
+                                <td><input type="text" id="type" name="type" placeholder="Enter type (e.g., TV, Online)" required></td>
+                            </tr>
+                            <tr>
+                                <td><label for="contact_info">Contact Info:</label></td>
+                                <td><input type="text" id="contact_info" name="contact_info" placeholder="Enter contact info" required></td>
+                            </tr>
+                            <tr>
+                                <td><label for="description">Description:</label></td>
+                                <td><textarea id="description" name="description" placeholder="Write a brief description"></textarea></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" style="text-align: center;">
+                                    <button type="submit">Add Media Partner</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </form>
+                </div>
+            </section>
+
+        </main>
+        <footer>
+            <p>&copy; 2024 Bangladesh Football Federation. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        const mediaList = document.getElementById('media-list');
+        const addMediaForm = document.getElementById('add-media-form');
+
+        // Fetch and display media records
+        function fetchMedia() {
+    fetch('http://localhost:3000/media')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to fetch media');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Fetched Media:', data); // Logs the response
+            const mediaList = document.getElementById('media-list');
+            mediaList.innerHTML = ''; // Clear previous content
+            data.forEach(media => {
+                const div = document.createElement('div');
+                div.classList.add('media');
+                div.innerHTML = `
+                    <h3>${media.name}</h3>
+                    <p><strong>Type:</strong> ${media.type}</p>
+                    <p><strong>Contact Info:</strong> ${media.contact_info}</p>
+                    <p><strong>Description:</strong> ${media.description}</p>
+                    <button onclick="editMedia(${media.media_id})">Edit</button>
+                    <button onclick="deleteMedia(${media.media_id})">Delete</button>
+                `;
+                mediaList.appendChild(div);
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching media:', error); // Logs fetch error
+            alert('Error fetching media. Please try again.');
+        });
+}
+
+
+addMediaForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const name = document.getElementById('name').value;
+                const type = document.getElementById('type').value;
+                const contact_info = document.getElementById('contact_info').value;
+                const description = document.getElementById('description').value;
+
+                try {
+                    await fetch('http://localhost:3000/media', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ name, type, contact_info, description }),
+                    });
+                    fetchMedia();
+                    addMediaForm.reset();
+                } catch (error) {
+                    console.error('Error adding media:', error);
+                }
+            });
+        // Edit a media record
+        function editMedia(id) {
+            const name = prompt('Enter new name:');
+            const type = prompt('Enter new type:');
+            const contact_info = prompt('Enter new contact info:');
+            const description = prompt('Enter new description:');
+
+            fetch(`http://localhost:3000/media/${id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, type, contact_info, description })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    alert(data.message);
+                    fetchMedia();
+                });
+        }
+
+        // Delete a media record
+        // Delete a media record
+function deleteMedia(id) {
+    if (!confirm('Are you sure you want to delete this media?')) return;
+
+    fetch(`http://localhost:3000/media/${id}`, {
+        method: 'DELETE',
+    })
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error('Failed to delete media');
+            }
+            return response.json();
+        })
+        .then((data) => {
+            alert(data.message);
+            fetchMedia(); // Reload the updated list
+        })
+        .catch((error) => {
+            console.error('Error deleting media:', error);
+            alert('Error deleting media. Please try again.');
+        });
+}
+
+
+        // Initial fetch
+        fetchMedia();
+    </script>
+</body>
+</html>

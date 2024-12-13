@@ -1,0 +1,104 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif, sans-serif;
+    background: url('thumb-1920-979534.jpg') no-repeat center center fixed;
+    background-size: cover;
+    color: #ffffff;
+    line-height: 1.6;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Header styling */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background: hwb(300 98% 1% / 0.9); /* Greenish transparent background */
+}
+
+header .logo h1 {
+    font-size: 36px;
+    color: #01020f; /* Golden text */
+    font-weight: bold;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+}
+
+header nav {
+    flex-grow: 1;
+    text-align: right;
+}
+
+header .menu {
+    list-style: none;
+    display: inline-flex;
+    gap: 20px;
+}
+
+header .menu li {
+    margin: 0;
+}
+
+header .menu a {
+    text-decoration: none;
+    color: #030303;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 10px 15px;
+    transition: background 0.3s, color 0.3s;
+    border-radius: 5px;
+}
+
+header .menu a:hover {
+    background: #a334f2; /* Golden background */
+    color: #160474; /* Dark green text */
+}
+
+/* Main content styling */
+main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.5); /* Dark transparent overlay */
+}
+
+main .welcome {
+    text-align: center;
+    max-width: 800px;
+    background: rgba(255, 255, 255, 0.1); /* Light transparent overlay */
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+main h1 {
+    font-size: 36px;
+    margin-bottom: 15px;
+    color: #1e1b08; /* Golden text */
+}
+
+main p {
+    font-size: 20px;
+    line-height: 1.8;
+}
+
+/* Footer styling */
+footer {
+    text-align: center;
+    padding: 10px 20px;
+    background: #070707; /* Dark green */
+    color: #ffffff;
+    font-size: 14px;
+}

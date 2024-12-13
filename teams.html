@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teams - Bangladesh Football Federation</title>
+    <link rel="stylesheet" href="teams.css">
+
+    <style>
+        /* Responsive layout for teams */
+        #team-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive: 2-3 columns depending on screen size */
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .team {
+            border: 1px solid #ccc;
+            padding: 15px;
+            border-radius: 10px;
+            background-color: #080101;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .team h3 {
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .team p {
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+
+        .team .players ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .team .players li {
+            font-size: 0.9rem;
+        }
+
+        /* Add Team Section */
+.add-team {
+    margin: 40px auto;
+    max-width: 600px; /* Center and limit the width */
+    padding: 20px;
+    background-color: #fdfdfd;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd;
+}
+
+.add-team h2 {
+    font-size: 1.8rem;
+    color: #8f1c1c;
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+#add-team-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+#add-team-form label {
+    font-size: 0.9rem;
+    color: #333;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+#add-team-form input {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+#add-team-form button {
+    padding: 10px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    background-color: #8f1c1c;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+#add-team-form button:hover {
+    background-color: #b12323;
+}
+
+#players-container {
+    border: 1px solid #ddd;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+}
+
+#players-container .player {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+#players-container input {
+    flex: 1;
+}
+
+#add-player {
+    background-color: #0056b3;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#add-player:hover {
+    background-color: #0074e0;
+}
+        </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <h1>Bangladesh Football Federation</h1>
+            </div>
+            <nav>
+                <ul class="menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="#" class="active">Teams</a></li>
+                    <li><a href="tournaments.html">Tournaments</a></li>
+                    <li><a href="stadium.html">Stadiums</a></li>
+                    <li><a href="media.html">Media</a></li>
+                    <li><a href="matches.html"> Matches</a></li>
+                    <li><a href="dashboard.html">Dashboard</a></li>
+                </ul>
+            </nav>
+        </header>
+        <main>
+            <section class="teams">
+                <h2>Teams and Players</h2>
+                <div id="team-list" class="team-list">
+                    <!-- Teams will be dynamically added here -->
+                </div>
+            </section>
+
+            <section class="add-team">
+                <h2>Add a New Team</h2>
+                <form id="add-team-form">
+                    <!-- Team Information -->
+                    <div>
+                        <label for="team-name">Team Name:</label>
+                        <input type="text" id="team-name" name="team_name" required>
+                    </div>
+                    <div>
+                        <label for="city">City:</label>
+                        <input type="text" id="city" name="city" required>
+                    </div>
+                    <div>
+                        <label for="foundation-year">Foundation Year:</label>
+                        <input type="number" id="foundation-year" name="foundation_year" required>
+                    </div>
+            
+                    <!-- Coach Information -->
+                    <div>
+                        <label for="coach-name">Coach Name:</label>
+                        <input type="text" id="coach-name" name="coach_name" required>
+                    </div>
+                    <div>
+                        <label for="experience">Experience (Years):</label>
+                        <input type="number" id="experience" name="experience" required>
+                    </div>
+            
+                    <!-- Players Information -->
+                    <div id="players-container">
+                        <h3>Players</h3>
+                        <div class="player">
+                            <input type="text" name="player_name[]" placeholder="Player Name" required>
+                            <input type="text" name="position[]" placeholder="Position" required>
+                        </div>
+                    </div>
+            
+                    <!-- Add More Players Button -->
+                    <button type="button" id="add-player">Add Another Player</button>
+            
+                    <!-- Submit Button -->
+                    <button type="submit">Add Team</button>
+                </form>
+            </section>
+            
+            
+            
+            
+        </main>
+        <script>
+            // Fetch data from the backend
+            fetch('http://localhost:3000/teams')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const teamList = document.getElementById('team-list');
+                    data.forEach(team => {
+                        const teamDiv = document.createElement('div');
+                        teamDiv.classList.add('team');
+        
+                        // Add team details
+                        teamDiv.innerHTML = `
+                            <h3>Team Name: <br> ${team.team_name}</h3>
+                            <p><strong>City:</strong> ${team.city}</p>
+                            <p><strong>Founded:</strong> ${team.foundation_year}</p>
+                            <p><strong>Coach:</strong> ${team.coach_name || 'N/A'}</p>
+                            <div class="players">
+                                <h4>Players:</h4>
+                                <ul>
+                                    ${team.players.map(player => `<li>${player.name} - ${player.position}</li>`).join('')}
+                                </ul>
+                            </div>
+                        `;
+                        teamList.appendChild(teamDiv);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching teams:', error);
+                    const teamList = document.getElementById('team-list');
+                    teamList.innerHTML = `<p>Error loading teams. Please try again later.</p>`;
+                });
+
+                document.getElementById('add-player').addEventListener('click', function () {
+    const playersContainer = document.getElementById('players-container');
+    const playerDiv = document.createElement('div');
+    playerDiv.classList.add('player');
+    playerDiv.innerHTML = `
+        <label>Player Name:</label>
+        <input type="text" name="player_name[]" required>
+        <label>Position:</label>
+        <input type="text" name="position[]" required><br>
+    `;
+    playersContainer.appendChild(playerDiv);
+});
+
+document.getElementById('add-team-form').addEventListener('submit', function (event) {
+    event.preventDefault(); // Prevent form from reloading the page
+
+    const teamData = {
+        name: document.getElementById('team-name').value,
+        city: document.getElementById('city').value,
+        foundation_year: document.getElementById('foundation-year').value,
+        coach: {
+            name: document.getElementById('coach-name').value,
+            experience: document.getElementById('experience').value
+        },
+        players: Array.from(document.getElementsByName('player_name[]')).map((_, i) => ({
+            name: document.getElementsByName('player_name[]')[i].value,
+            position: document.getElementsByName('position[]')[i].value
+        }))
+    };
+
+    fetch('http://localhost:3000/teams', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(teamData)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Failed to add team');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Team, Coach, and Players added successfully:', data);
+        alert('Team added successfully!');
+        location.reload(); // Reload to see the updated list
+    })
+    .catch(error => {
+        console.error('Error adding team:', error);
+        alert('Error adding team. Please try again.');
+    });
+});
+
+        </script>
+        
+        
+        
+        <footer>
+            <p>&copy; 2024 Bangladesh Football Federation. All rights reserved.</p>
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tournaments - Bangladesh Football Federation</title>
+    <link rel="stylesheet" href="tournaments.css">
+
+    <style>
+        /* Responsive layout for tournaments */
+        #tournament-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive: 2-3 columns depending on screen size */
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .tournament {
+            border: 1px solid #ccc;
+            padding: 15px;
+            border-radius: 10px;
+            background-color: #080101;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .tournament h3 {
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .tournament p {
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+
+        .tournament button {
+            margin-top: 10px;
+            padding: 8px 12px;
+            font-size: 0.9rem;
+            color: white;
+            background: #8f1c1c;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .tournament button:hover {
+            background: #0056b3;
+        }
+
+        .add-tournament-form-container {
+    margin: 20px auto;
+    max-width: 700px;
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd;
+}
+
+.add-tournament-form-container h3 {
+    text-align: center;
+    font-size: 1.8rem;
+    color: #8f1c1c;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+#add-tournament-form table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#add-tournament-form table td {
+    padding: 10px;
+    vertical-align: top;
+}
+
+#add-tournament-form label {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #333;
+}
+
+#add-tournament-form input,
+#add-tournament-form textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+#add-tournament-form textarea {
+    resize: none;
+    height: 80px;
+}
+
+#add-tournament-form button {
+    width: 50%;
+    padding: 10px;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #8f1c1c;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#add-tournament-form button:hover {
+    background-color: #b12323;
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <h1>Bangladesh Football Federation</h1>
+            </div>
+            <nav>
+                <ul class="menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="teams.html">Teams</a></li>
+                    <li><a href="#" class="active">Tournaments</a></li>
+                    <li><a href="stadium.html">Stadiums</a></li>
+                    <li><a href="media.html">Media</a></li>
+                    <li><a href="matches.html"> Matches</a></li>
+                    <li><a href="dashboard.html">Dashboard</a></li>
+                </ul>
+            </nav>
+        </header>
+        <main>
+            <section class="tournament-section">
+                <h2>Tournaments</h2>
+                <div id="tournament-list"></div>
+
+                
+            </section>
+
+            <section class="add-tournament">
+                <div class="add-tournament-form-container">
+                    <h3>Add New Tournament</h3>
+                    <form id="add-tournament-form">
+                        <table>
+                            <tr>
+                                <td><label for="name">Tournament Name:</label></td>
+                                <td><input type="text" id="name" name="name" placeholder="Enter tournament name" required></td>
+                            </tr>
+                            <tr>
+                                <td><label for="start_date">Start Date:</label></td>
+                                <td><input type="date" id="start_date" name="start_date" required></td>
+                            </tr>
+                            <tr>
+                                <td><label for="end_date">End Date:</label></td>
+                                <td><input type="date" id="end_date" name="end_date" required></td>
+                            </tr>
+                            <tr>
+                                <td><label for="type">Type:</label></td>
+                                <td><input type="text" id="type" name="type" placeholder="e.g., Knockout, Round Robin" required></td>
+                            </tr>
+                            <tr>
+                                <td><label for="description">Description:</label></td>
+                                <td><textarea id="description" name="description" placeholder="Write a brief description"></textarea></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" style="text-align: center;">
+                                    <button type="submit">Add Tournament</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </form>
+                </div>
+            </section>
+            
+        </main>
+        
+        <script>
+            const tournamentList = document.getElementById('tournament-list');
+            const addTournamentForm = document.getElementById('add-tournament-form');
+        
+
+const fetchTournaments = async () => {
+    try {
+        const response = await fetch('http://localhost:3000/tournaments');
+        if (!response.ok) {
+            throw new Error('Failed to fetch tournaments');
+        }
+        const tournaments = await response.json();
+        if (!tournaments.length) {
+            tournamentList.innerHTML = '<p>No tournaments available.</p>';
+            return;
+        }
+        tournamentList.innerHTML = ''; // Clear the list
+        tournaments.forEach(tournament => {
+            const tournamentDiv = document.createElement('div');
+            tournamentDiv.classList.add('tournament');
+            tournamentDiv.innerHTML = `
+                <h3>${tournament.name}</h3>
+                <p><strong>Type:</strong> ${tournament.type}</p>
+                <p><strong>Start Date:</strong> ${new Date(tournament.start_date).toLocaleDateString()}</p>
+                <p><strong>End Date:</strong> ${new Date(tournament.end_date).toLocaleDateString()}</p>
+                <p><strong>Description:</strong> ${tournament.description || 'N/A'}</p>
+                <button onclick="deleteTournament(${tournament.tournament_id})">Delete</button>
+            `;
+            tournamentList.appendChild(tournamentDiv);
+        });
+    } catch (error) {
+        console.error('Error fetching tournaments:', error);
+        tournamentList.innerHTML = '<p>Error loading tournaments. Please try again later.</p>';
+    }
+};
+
+fetchTournaments();
+
+        
+            // Add a new tournament
+            addTournamentForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const name = document.getElementById('name').value;
+                const start_date = document.getElementById('start_date').value;
+                const end_date = document.getElementById('end_date').value;
+                const type = document.getElementById('type').value;
+                const description = document.getElementById('description').value;
+        
+                try {
+                    await fetch('http://localhost:3000/tournaments', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ name, start_date, end_date, type, description })
+                    });
+                    fetchTournaments();
+                    addTournamentForm.reset();
+                } catch (error) {
+                    console.error('Error adding tournament:', error);
+                }
+            });
+        
+            
+
+            // Delete a tournament
+            const deleteTournament = async (id) => {
+                try {
+                    await fetch(`http://localhost:3000/tournaments/${id}`, { method: 'DELETE' });
+                    fetchTournaments();
+                } catch (error) {
+                    console.error('Error deleting tournament:', error);
+                }
+            };
+        
+            // Initial fetch
+            fetchTournaments();
+        </script>
+        
+        <footer>
+            <p>&copy; 2024 Bangladesh Football Federation. All rights reserved.</p>
+        </footer>
+    </div>
+</body>
+</html>
